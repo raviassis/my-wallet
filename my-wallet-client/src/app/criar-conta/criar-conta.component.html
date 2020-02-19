@@ -1,0 +1,27 @@
+<header class="header">
+    <h1>Criar Conta</h1>
+</header>
+
+<form [formGroup]="contaForm" (ngSubmit)="onSubmit()" class="contaForm">
+    <mat-form-field>
+        <mat-label>Nome</mat-label>
+        <input matInput formControlName="nome">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Sobrenome</mat-label>
+        <input matInput formControlName="sobrenome">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Email</mat-label>
+        <input matInput formControlName="email">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Senha</mat-label>
+        <input type="password" matInput formControlName="senha">
+    </mat-form-field>
+    <mat-form-field>
+        <mat-label>Confirme sua senha</mat-label>
+        <input type="password" matInput formControlName="confirmarSenha">
+    </mat-form-field>
+    <button mat-raised-button color="primary" [disabled]="!contaForm.valid">Criar</button>
+</form>
