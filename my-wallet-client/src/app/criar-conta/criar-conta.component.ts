@@ -13,7 +13,7 @@ export class CriarContaComponent implements OnInit {
     {
       nome: ['', Validators.required],
       sobrenome: ['', Validators.required],
-      email: ['', Validators.required],
+      email: ['', [Validators.required, Validators.email]],
       senha: [
         '',
         [Validators.required, Validators.minLength(this.minPasswordLength)]
@@ -23,13 +23,15 @@ export class CriarContaComponent implements OnInit {
         [Validators.required, Validators.minLength(this.minPasswordLength)]
       ],
     },
-    { validators: this.diferenteDe},
+    { validators: this.senhasDiferentes() },
   );
 
-  diferenteDe(): ValidatorFn {
+  senhasDiferentes(): ValidatorFn {
     return (control: FormGroup): ValidationErrors | null => {
-      const diferentes = control.get('senha') !== control.get('confirmarSenha');
-      return diferentes ? { senhasDiferentes : true} : null;
+      const senha = control.get('senha').value;
+      const confirmarSenha = control.get('confirmarSenha').value;
+      const diferentes = senha !== confirmarSenha;
+      return diferentes ? {senhasDiferentes: 'Senhas diferentes.'} : null;
     };
   }
 

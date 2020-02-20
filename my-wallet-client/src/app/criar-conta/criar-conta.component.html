@@ -1,4 +1,7 @@
 <header class="header">
+    <button mat-icon-button>
+        <mat-icon>arrow_back</mat-icon>
+    </button>
     <h1>Criar Conta</h1>
 </header>
 
@@ -23,5 +26,5 @@
         <mat-label>Confirme sua senha</mat-label>
         <input type="password" matInput formControlName="confirmarSenha">
     </mat-form-field>
-    <button mat-raised-button color="primary" [disabled]="!contaForm.valid">Criar</button>
+    <button mat-raised-button color="accent" [disabled]="!contaForm.valid">Criar</button>
 </form>
