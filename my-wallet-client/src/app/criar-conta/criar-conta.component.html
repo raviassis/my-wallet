@@ -1,5 +1,5 @@
 <header class="header">
-    <button mat-icon-button>
+    <button class="button-back" mat-icon-button (click)="location.back()">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <h1>Criar Conta</h1>
@@ -9,22 +9,37 @@
     <mat-form-field>
         <mat-label>Nome</mat-label>
         <input matInput formControlName="nome">
+        <mat-error *ngIf="nome.errors">
+            O nome deve ser informado.
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Sobrenome</mat-label>
         <input matInput formControlName="sobrenome">
+        <mat-error *ngIf="sobrenome.errors">
+            O sobrenome deve ser informado.
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Email</mat-label>
         <input matInput formControlName="email">
+        <mat-error *ngIf="email.errors">
+            {{getEmailErros()}}
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Senha</mat-label>
         <input type="password" matInput formControlName="senha">
+        <mat-error *ngIf="senha.errors">
+            {{getSenhaErros()}}
+        </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Confirme sua senha</mat-label>
         <input type="password" matInput formControlName="confirmarSenha">
+        <mat-error *ngIf="confirmarSenha.errors || contaForm.errors">
+            {{getConfirmarSenhaErros()}}
+        </mat-error>
     </mat-form-field>
     <button mat-raised-button color="accent" [disabled]="!contaForm.valid">Criar</button>
 </form>

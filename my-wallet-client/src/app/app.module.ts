@@ -10,6 +10,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import {MatIconModule} from '@angular/material/icon';
+import {MatDialogModule} from '@angular/material/dialog';
 /***********/
 
 /*Nativos*/
@@ -17,13 +18,15 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CriarContaComponent } from './criar-conta/criar-conta.component';
 import { LoginComponent } from './login/login.component';
+import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
 /*********/
 
 @NgModule({
   declarations: [
     AppComponent,
     CriarContaComponent,
-    LoginComponent
+    LoginComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
@@ -34,6 +37,7 @@ import { LoginComponent } from './login/login.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    MatDialogModule
   ],
   providers: [],
   bootstrap: [AppComponent]
