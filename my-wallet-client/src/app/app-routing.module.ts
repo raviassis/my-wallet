@@ -5,7 +5,6 @@ import { LoginComponent } from './pages/login/login.component';
 
 
 const routes: Routes = [
-  { path: ''},
   { path: 'login', component: LoginComponent },
   { path: 'criar-conta', component: CriarContaComponent },
 ];
