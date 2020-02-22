@@ -16,8 +16,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 /*Nativos*/
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { CriarContaComponent } from './criar-conta/criar-conta.component';
-import { LoginComponent } from './login/login.component';
+import { CriarContaComponent } from './pages/criar-conta/criar-conta.component';
+import { LoginComponent } from './pages/login/login.component';
 import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
 /*********/
 
