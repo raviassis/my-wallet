@@ -10,14 +10,14 @@
         <mat-label>Nome</mat-label>
         <input matInput formControlName="nome">
         <mat-error *ngIf="nome.errors">
-            O nome deve ser informado.
+            {{getNomeErros()}}
         </mat-error>
     </mat-form-field>
     <mat-form-field>
         <mat-label>Sobrenome</mat-label>
         <input matInput formControlName="sobrenome">
         <mat-error *ngIf="sobrenome.errors">
-            O sobrenome deve ser informado.
+            {{getSobrenomeErros()}}
         </mat-error>
     </mat-form-field>
     <mat-form-field>

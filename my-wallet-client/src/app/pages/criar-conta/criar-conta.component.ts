@@ -3,8 +3,9 @@ import { Location } from '@angular/common';
 import { FormGroup, FormBuilder, ValidatorFn, ValidationErrors, FormControl, AbstractControl } from '@angular/forms';
 import { Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { DialogComponent } from '../shared/dialogs/dialog/dialog.component';
-import { constantes } from '../shared/constantes';
+import { DialogComponent } from '../../shared/dialogs/dialog/dialog.component';
+import { constantes } from '../../shared/constantes';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-criar-conta',
@@ -12,6 +13,7 @@ import { constantes } from '../shared/constantes';
   styleUrls: ['./criar-conta.component.scss']
 })
 export class CriarContaComponent implements OnInit {
+
   private minPasswordLength = 8;
   contaForm = this.fb.group(
     {
@@ -30,68 +32,83 @@ export class CriarContaComponent implements OnInit {
     { validators: this.senhasDiferentes() },
   );
 
+  constructor(private fb: FormBuilder,
+              public location: Location,
+              private router: Router,
+              private dialog: MatDialog) { }
+
+  ngOnInit(): void {
+  }
+
+  private senhasDiferentes(): ValidatorFn {
+    return (control: FormGroup): ValidationErrors | null => {
+      const senha = control.get('senha').value;
+      const confirmarSenha = control.get('confirmarSenha').value;
+      const diferentes = senha !== confirmarSenha;
+      return diferentes ? {senhasDiferentes: true} : null;
+    };
+  }
+
   get nome() { return this.contaForm.get('nome'); }
   get sobrenome() { return this.contaForm.get('sobrenome'); }
   get email() { return this.contaForm.get('email'); }
   get senha() { return this.contaForm.get('senha'); }
   get confirmarSenha() { return this.contaForm.get('confirmarSenha'); }
 
+  getNomeErros(): string {
+    return this.nome.errors?.required
+            ? constantes.textos.CAMPO_OBRIGATORIO
+            : '';
+  }
+
+  getSobrenomeErros(): string {
+    return this.sobrenome.errors?.required
+            ? constantes.textos.CAMPO_OBRIGATORIO
+            : '';
+  }
+
   getEmailErros(): string {
-    if ( this.email.errors.required ) {
+    if ( this.email.errors?.required ) {
       return constantes.textos.CAMPO_OBRIGATORIO;
     }
-    if ( this.email.errors.email) {
-      return 'Deve ser informado um email';
+    if ( this.email.errors?.email) {
+      return constantes.textos.DEVE_SER_EMAIL;
     }
     return '';
   }
 
   getSenhaErros(): string {
-    if ( this.senha.errors.required ) {
+    if ( this.senha.errors?.required ) {
       return constantes.textos.CAMPO_OBRIGATORIO;
     }
-    if ( this.senha.errors.minlength ) {
-      return `Deve ter no mínimo ${this.minPasswordLength} caracteres`;
+    if ( this.senha.errors?.minlength ) {
+      return constantes.textos.CAMPO_TAMANHO_MINIMO.replace('{n}', this.minPasswordLength.toString());
     }
     return '';
   }
 
   getConfirmarSenhaErros(): string {
-    if ( this.confirmarSenha.errors.required ) {
+    if ( this.confirmarSenha.errors?.required ) {
       return constantes.textos.CAMPO_OBRIGATORIO;
     }
-    if ( this.confirmarSenha.errors.minlength ) {
-      return `Deve ter no mínimo ${this.minPasswordLength} caracteres`;
+    if ( this.confirmarSenha.errors?.minlength ) {
+      return constantes.textos.CAMPO_TAMANHO_MINIMO.replace('{n}', this.minPasswordLength.toString());
     }
-    if ( this.contaForm.errors.senhasDiferentes ) {
-      return 'A senha e sua confirmação estão diferentes';
+    if ( this.contaForm.errors?.senhasDiferentes ) {
+      return constantes.textos.CONFIRMARSENHA_DIFERENTE;
     }
     return '';
   }
 
-  constructor(private fb: FormBuilder,
-              public location: Location,
-              public dialog: MatDialog) { }
-
-  ngOnInit(): void {
-  }
-
   onSubmit() {
-    console.log(this.contaForm.controls.nome.value);
     this.dialog.open(DialogComponent, {
       data: {
         message: constantes.textos.CONTA_CRIADA_SUCESSO,
       }
-    });
-  }
-
-  senhasDiferentes(): ValidatorFn {
-    return (control: FormGroup): ValidationErrors | null => {
-      const senha = control.get('senha').value;
-      const confirmarSenha = control.get('confirmarSenha').value;
-      const diferentes = senha !== confirmarSenha;
-      return diferentes ? {senhasDiferentes: 'Senhas diferentes.'} : null;
-    };
+    }).afterClosed()
+      .subscribe(() => {
+        this.router.navigate(['']);
+      });
   }
 
 }
