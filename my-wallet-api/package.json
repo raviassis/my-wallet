@@ -4,12 +4,17 @@
   "private": true,
   "scripts": {
     "start": "node ./bin/www",
-    "publishheroku": "cd ../ && git subtree push --prefix my-wallet-api heroku-mywalletapi master"
+    "publishheroku": "cd ../ && git subtree push --prefix my-wallet-api heroku-mywalletapi master",
+    "test": "jest"
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
     "debug": "~2.6.9",
     "express": "~4.16.1",
+    "express-validator": "^6.4.0",
     "morgan": "~1.9.1"
+  },
+  "devDependencies": {
+    "jest": "^25.1.0"
   }
 }
