@@ -1,11 +1,9 @@
-var express = require('express');
-var router = express.Router();
-var usersController = require('../controllers/usersController');
+const validator = require('../middlewares/validator');
+const userValidator = require('../controllers/validators/userValidator');
+const awilixExpress = require('awilix-express');
+const UserController = require('../controllers/userController');
 
-router.post(
-    '/',
-    usersController.validate('post'),
-    usersController.post
-);
-
-module.exports = router;
+module.exports = awilixExpress.createController(UserController)
+                                .prefix('/users')
+                                .before(validator.validate(new userValidator()))
+                                .post('', 'post');

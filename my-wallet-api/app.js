@@ -1,11 +1,17 @@
+require('dotenv').config();
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const expressValidator = require('express-validator');
-
+const di = require('./di');
+const awilixExpress = require('awilix-express');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/usersRoute');
+
+
+//init mongodb
+var UserRepository = di.resolve('userRepository');
+UserRepository.createCollection();
 
 var app = express();
 
@@ -15,7 +21,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+// app.use('/', indexRouter);
+// app.use('/users', usersRouter);
+app.use(awilixExpress.scopePerRequest(di));
+app.use(awilixExpress.loadControllers('routes/*.js', {cwd: __dirname}));
 
 module.exports = app;

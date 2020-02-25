@@ -1,9 +1,9 @@
 const usersController = require('../../controllers/usersController');
 
 describe('usersController', () => {
-    test('usersController post', () => {
+    test('post', () => {
         const req = {
-            body: {
+            validBody: {
                 nome: 'Teste',
                 sobrenome: 'Teste',
                 email: 'teste@teste',
