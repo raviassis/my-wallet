@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { DialogComponent } from '../../shared/dialogs/dialog/dialog.component';
 import { constantes } from '../../shared/constantes';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-criar-conta',
@@ -35,7 +36,8 @@ export class CriarContaComponent implements OnInit {
   constructor(private fb: FormBuilder,
               public location: Location,
               private router: Router,
-              private dialog: MatDialog) { }
+              private dialog: MatDialog,
+              private userService: UserService) { }
 
   ngOnInit(): void {
   }
@@ -101,14 +103,27 @@ export class CriarContaComponent implements OnInit {
   }
 
   onSubmit() {
-    this.dialog.open(DialogComponent, {
-      data: {
-        message: constantes.textos.CONTA_CRIADA_SUCESSO,
-      }
-    }).afterClosed()
-      .subscribe(() => {
-        this.router.navigate(['']);
-      });
+    console.log(this.contaForm.value);
+    this.userService.criarConta(this.contaForm.value)
+      .subscribe(
+        (res) => {
+          this.dialog.open(DialogComponent, {
+            data: {
+              message: constantes.textos.CONTA_CRIADA_SUCESSO,
+            }
+          }).afterClosed()
+            .subscribe(() => {
+              this.router.navigate(['']);
+            });
+        },
+        (err) => {
+          const firstMsg = err.error.errors[0];
+          this.dialog.open(DialogComponent, {
+            data: {message: firstMsg.message}
+          });
+        },
+        () => {}
+      );
   }
 
 }
