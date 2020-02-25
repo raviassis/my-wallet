@@ -12,7 +12,8 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "postinstall": "ng build --aot --prod"
+    "postinstall": "ng build --aot --prod",
+    "publishheroku": "cd ../ && git subtree push --prefix my-wallet-client heroku-mywalletclient master"
   },
   "private": true,
   "dependencies": {
