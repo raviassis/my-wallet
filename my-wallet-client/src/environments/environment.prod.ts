@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'apiUrl',
+  apiUrl: 'https://mywalletapi.herokuapp.com/',
   ambiente: 'produção',
 };
