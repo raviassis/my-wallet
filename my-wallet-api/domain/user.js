@@ -1,6 +1,6 @@
 const { attributes } = require('structure');
 
-const User = attributes({
+module.exports = attributes({
     _id: {
         type: String,
     },
@@ -9,5 +9,3 @@ const User = attributes({
     email: String,
     senha: String,
 })(class User {});
-
-module.exports = User;

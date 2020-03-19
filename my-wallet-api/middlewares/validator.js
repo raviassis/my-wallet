@@ -1,11 +1,12 @@
+const constants = require('../constants');
 //validate body request
 exports.validate = (validator) => {
     return (req, res, next) => {
         try {
-            req.validBody = validator.clone(req.body);
-            const validation = req.validBody.validate();
+            const validation = validator.clone(req.body).validate();
+            debugger;
             if (!validation.valid) {
-                res.status(422).json({ errors: validation.errors });
+                res.status(constants.HTTP_STATUS_CODES.UNPROCESSABLE_ENTITY).json({ errors: validation.errors });
                 return;
             }
             next();

@@ -1,5 +1,5 @@
 const { attributes } = require('structure');
-const userValidator = attributes({
+module.exports = attributes({
     nome: {
         type: String,
         required: true,
@@ -19,5 +19,3 @@ const userValidator = attributes({
         minLength: 8,
     },
 })(class UserValidator {});
-
-module.exports = userValidator;

@@ -1,8 +1,7 @@
 const awilix = require('awilix');
 const MongoClient = require('mongodb').MongoClient;
 const uriMongoDb = process.env.MONGODB_URI;
-const UserRepository = require('./data/userRepository');
-const UserService = require('./services/userService');
+const hash = require('password-hash');
 
 const container = awilix.createContainer({
     injectionMode: awilix.InjectionMode.PROXY
@@ -11,9 +10,7 @@ const container = awilix.createContainer({
 container.register({
     uriDb: awilix.asValue(uriMongoDb),
     dbClient: awilix.asValue(MongoClient),
-    // userRepository: awilix.asClass(UserRepository),
-    // userService: awilix.asClass(UserService),
-    // userController: awilix.asClass(UserController),
+    hasher: awilix.asValue(hash),
 });
 
 container.loadModules(

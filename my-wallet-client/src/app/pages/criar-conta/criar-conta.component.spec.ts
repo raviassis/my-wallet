@@ -9,6 +9,7 @@ import { constantes } from '../../shared/constantes';
 import { Router } from '@angular/router';
 import { of } from 'rxjs';
 import { DialogComponent } from '../../shared/dialogs/dialog/dialog.component';
+import { UserService } from 'src/app/services/user.service';
 
 describe('CriarContaComponent', () => {
   let component: CriarContaComponent;
@@ -21,7 +22,8 @@ describe('CriarContaComponent', () => {
         {provide: FormBuilder, useValue: new FormBuilder()},
         {provide: Location, useValue: {}},
         {provide: MatDialog, useClass: MatDialogMock},
-        {provide: Router, useClass: RouterMock}
+        {provide: Router, useClass: RouterMock},
+        {provide: UserService, useClass: UserServiceMock},
       ],
       schemas: [ NO_ERRORS_SCHEMA ]
     })
@@ -112,7 +114,7 @@ describe('CriarContaComponent', () => {
     expect(component.getConfirmarSenhaErros()).toBe(constantes.textos.CONFIRMARSENHA_DIFERENTE);
   });
 
-  fit('should submit and redirect to homepage', () => {
+  it('should submit and redirect to homepage', () => {
     const nome = 'Teste';
     const sobrenome = 'Teste';
     const email = 'teste@teste';
@@ -120,11 +122,15 @@ describe('CriarContaComponent', () => {
     const confirmarSenha = 'testesenha123';
     const matDialog = TestBed.inject(MatDialog);
     const router = TestBed.inject(Router);
+    const userService = TestBed.inject(UserService);
     component.nome.setValue(nome);
     component.sobrenome.setValue(sobrenome);
     component.email.setValue(email);
     component.senha.setValue(senha);
     component.confirmarSenha.setValue(confirmarSenha);
+
+    const spyUserService = spyOn(userService, 'criarConta')
+                            .and.returnValue(of({}));
 
     const spyDialog = spyOn(matDialog, 'open').and.returnValue({
       afterClosed() { return of({}); }
@@ -135,6 +141,7 @@ describe('CriarContaComponent', () => {
     component.onSubmit();
     expect(spyDialog).toHaveBeenCalled();
     expect(spyRouter).toHaveBeenCalled();
+    expect(spyUserService).toHaveBeenCalled();
 
   });
 });
@@ -145,4 +152,8 @@ class MatDialogMock {
 
 class RouterMock {
   navigate() {}
+}
+
+class UserServiceMock {
+  criarConta() {}
 }

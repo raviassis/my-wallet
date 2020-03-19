@@ -103,7 +103,6 @@ export class CriarContaComponent implements OnInit {
   }
 
   onSubmit() {
-    console.log(this.contaForm.value);
     this.userService.criarConta(this.contaForm.value)
       .subscribe(
         (res) => {

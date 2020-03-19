@@ -1,21 +1,21 @@
-const User = require('../domain/user');
 const UserExistError = require('../erros/userExistError');
+const constants = require('../constants');
 module.exports = class UserController {
     constructor(opts){
-        console.log('UserController Created.');
         this.userService = opts.userService;
     }
 
     async post(req, resp, next) {
-        const user = new User(req.body);
         try {
-            var result = await this.userService.createUser(user);
-            resp.status(201).json(result);
+            debugger;
+            var result = await this.userService.createUser(req.body);
+            resp.status(constants.HTTP_STATUS_CODES.CREATED).json(result);
         } catch(e) {
             if (e instanceof UserExistError) {
-                resp.status(400).json({errors: [{message: e.message}]});
-            }
-            throw e;
+                resp.status(constants.HTTP_STATUS_CODES.BAD_REQUEST).json({errors: [{message: e.message}]});
+            } else {
+                next(e);
+            }            
         }       
         
     }
