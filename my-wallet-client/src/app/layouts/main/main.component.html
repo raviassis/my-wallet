@@ -1,0 +1,9 @@
+<mat-sidenav-container class="sidenav-container">
+    <mat-sidenav #sidenav>Sidenav content</mat-sidenav>
+    <mat-sidenav-content>
+        <header class="header">
+            <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>
+        </header>        
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+</mat-sidenav-container>
