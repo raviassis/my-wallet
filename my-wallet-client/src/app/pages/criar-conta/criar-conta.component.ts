@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CriarContaComponent implements OnInit {
 
+  loading = false;
   private minPasswordLength = 8;
   contaForm = this.fb.group(
     {
@@ -109,9 +110,11 @@ export class CriarContaComponent implements OnInit {
   }
 
   onSubmit() {
+    this.loading = true;
     this.userService.criarConta(this.contaForm.value)
       .subscribe(
         (res) => {
+          this.loading = false;
           this.dialog.open(DialogComponent, {
             data: {
               message: constantes.textos.CONTA_CRIADA_SUCESSO,
@@ -122,6 +125,7 @@ export class CriarContaComponent implements OnInit {
             });
         },
         (err) => {
+          this.loading = false;
           const firstMsg = err.error.errors[0];
           this.dialog.open(DialogComponent, {
             data: {message: firstMsg.message}
