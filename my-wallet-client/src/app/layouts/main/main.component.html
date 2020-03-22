@@ -1,5 +1,7 @@
 <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav #sidenav>Sidenav content</mat-sidenav>
+    <mat-sidenav #sidenav>
+        <app-sidenav></app-sidenav>
+    </mat-sidenav>
     <mat-sidenav-content>
         <header class="header">
             <button mat-icon-button (click)="sidenav.toggle()"><mat-icon>menu</mat-icon></button>

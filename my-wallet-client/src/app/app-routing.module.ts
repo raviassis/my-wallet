@@ -4,6 +4,7 @@ import { CriarContaComponent } from './pages/criar-conta/criar-conta.component';
 import { LoginComponent } from './pages/login/login.component';
 import { MainComponent } from './layouts/main/main.component';
 import { HomeComponent } from './pages/home/home.component';
+import { AuthGuard } from './guards/auth.guard';
 
 
 const routes: Routes = [
@@ -12,6 +13,7 @@ const routes: Routes = [
   {
     path: '',
     component: MainComponent,
+    canActivate: [AuthGuard],
     children: [
       { path: '', component: HomeComponent }
     ],

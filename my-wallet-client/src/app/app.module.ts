@@ -14,6 +14,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatCardModule } from '@angular/material/card';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /***********/
 
 /*Nativos*/
@@ -24,6 +27,8 @@ import { LoginComponent } from './pages/login/login.component';
 import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
 import { MainComponent } from './layouts/main/main.component';
 import { HomeComponent } from './pages/home/home.component';
+import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 /*********/
 
 @NgModule({
@@ -33,7 +38,9 @@ import { HomeComponent } from './pages/home/home.component';
     LoginComponent,
     DialogComponent,
     MainComponent,
-    HomeComponent
+    HomeComponent,
+    SidenavComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -48,6 +55,9 @@ import { HomeComponent } from './pages/home/home.component';
     MatDialogModule,
     MatCardModule,
     MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]

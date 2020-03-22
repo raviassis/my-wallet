@@ -7,7 +7,6 @@ module.exports = class UserController {
 
     async post(req, resp, next) {
         try {
-            debugger;
             var result = await this.userService.createUser(req.body);
             resp.status(constants.HTTP_STATUS_CODES.CREATED).json(result);
         } catch(e) {
@@ -16,7 +15,6 @@ module.exports = class UserController {
             } else {
                 next(e);
             }            
-        }       
-        
+        }               
     }
 }

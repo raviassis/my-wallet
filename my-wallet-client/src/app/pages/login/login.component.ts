@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 })
 export class LoginComponent implements OnInit {
 
+  loading = false;
   loginForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     senha: ['', Validators.required],
@@ -48,12 +49,15 @@ export class LoginComponent implements OnInit {
     if ( this.loginForm.valid ) {
       const email = this.loginForm.get('email').value;
       const password = this.loginForm.get('senha').value;
+      this.loading = true;
       this.auth.login(email, password)
         .subscribe(
           (res) => {
+            this.loading = false;
             this.router.navigate(['']);
           },
           (err) => {
+            this.loading = false;
             if (err.status === 401) {
               const firstError = err.error.errors[0];
               this.dialog.open(DialogComponent, {

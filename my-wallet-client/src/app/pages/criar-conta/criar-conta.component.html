@@ -37,7 +37,7 @@
     <mat-form-field>
         <mat-label>Confirme sua senha</mat-label>
         <input type="password" matInput formControlName="confirmarSenha">
-        <mat-error *ngIf="confirmarSenha.errors || contaForm.errors">
+        <mat-error *ngIf="getConfirmarSenhaErros()">
             {{getConfirmarSenhaErros()}}
         </mat-error>
     </mat-form-field>

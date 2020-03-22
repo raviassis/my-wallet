@@ -27,10 +27,9 @@ export class CriarContaComponent implements OnInit {
       ],
       confirmarSenha: [
         '',
-        [Validators.required, Validators.minLength(this.minPasswordLength)]
+        [Validators.required, Validators.minLength(this.minPasswordLength), this.senhasDiferentes().bind(this)]
       ],
-    },
-    { validators: this.senhasDiferentes() },
+    }
   );
 
   constructor(private fb: FormBuilder,
@@ -44,10 +43,17 @@ export class CriarContaComponent implements OnInit {
 
   private senhasDiferentes(): ValidatorFn {
     return (control: FormGroup): ValidationErrors | null => {
-      const senha = control.get('senha').value;
-      const confirmarSenha = control.get('confirmarSenha').value;
-      const diferentes = senha !== confirmarSenha;
-      return diferentes ? {senhasDiferentes: true} : null;
+      if (!this.contaForm) {
+        return null;
+      }
+      const senha = this.senha;
+      const confirmarSenha = this.confirmarSenha;
+
+      if (!(senha && confirmarSenha)) {
+        return null;
+      }
+      const diferentes = senha.value !== confirmarSenha.value;
+      return diferentes ? {senhasDiferentes: diferentes} : null;
     };
   }
 
@@ -96,7 +102,7 @@ export class CriarContaComponent implements OnInit {
     if ( this.confirmarSenha.errors?.minlength ) {
       return constantes.textos.CAMPO_TAMANHO_MINIMO.replace('{n}', this.minPasswordLength.toString());
     }
-    if ( this.contaForm.errors?.senhasDiferentes ) {
+    if ( this.confirmarSenha.errors?.senhasDiferentes ) {
       return constantes.textos.CONFIRMARSENHA_DIFERENTE;
     }
     return '';
