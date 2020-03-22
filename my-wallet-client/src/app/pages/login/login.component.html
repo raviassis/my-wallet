@@ -1,1 +1,25 @@
-<a mat-button routerLink="criar-conta">Criar Conta</a>
+
+<main class="login-main">
+    <h1>My Wallet</h1>
+    <form [formGroup]="loginForm" class="form" (ngSubmit)="onSubmit()">
+        <mat-form-field>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" formControlName="email">
+            <mat-error *ngIf="getEmailErros()">
+                {{getEmailErros()}}
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Senha</mat-label>
+            <input matInput type="password" formControlName="senha">
+            <mat-error *ngIf="getSenhaErros()">
+                {{getSenhaErros()}}
+            </mat-error>
+        </mat-form-field>
+        <button mat-raised-button color='primary'>Login</button>
+        <a mat-button routerLink="../criar-conta">Criar Conta</a>
+    </form>
+    
+</main>
+<app-spinner [visibled]="loading"></app-spinner>
+

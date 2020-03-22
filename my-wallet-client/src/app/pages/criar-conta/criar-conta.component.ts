@@ -15,6 +15,7 @@ import { UserService } from 'src/app/services/user.service';
 })
 export class CriarContaComponent implements OnInit {
 
+  loading = false;
   private minPasswordLength = 8;
   contaForm = this.fb.group(
     {
@@ -27,10 +28,9 @@ export class CriarContaComponent implements OnInit {
       ],
       confirmarSenha: [
         '',
-        [Validators.required, Validators.minLength(this.minPasswordLength)]
+        [Validators.required, Validators.minLength(this.minPasswordLength), this.senhasDiferentes().bind(this)]
       ],
-    },
-    { validators: this.senhasDiferentes() },
+    }
   );
 
   constructor(private fb: FormBuilder,
@@ -44,10 +44,17 @@ export class CriarContaComponent implements OnInit {
 
   private senhasDiferentes(): ValidatorFn {
     return (control: FormGroup): ValidationErrors | null => {
-      const senha = control.get('senha').value;
-      const confirmarSenha = control.get('confirmarSenha').value;
-      const diferentes = senha !== confirmarSenha;
-      return diferentes ? {senhasDiferentes: true} : null;
+      if (!this.contaForm) {
+        return null;
+      }
+      const senha = this.senha;
+      const confirmarSenha = this.confirmarSenha;
+
+      if (!(senha && confirmarSenha)) {
+        return null;
+      }
+      const diferentes = senha.value !== confirmarSenha.value;
+      return diferentes ? {senhasDiferentes: diferentes} : null;
     };
   }
 
@@ -96,16 +103,18 @@ export class CriarContaComponent implements OnInit {
     if ( this.confirmarSenha.errors?.minlength ) {
       return constantes.textos.CAMPO_TAMANHO_MINIMO.replace('{n}', this.minPasswordLength.toString());
     }
-    if ( this.contaForm.errors?.senhasDiferentes ) {
+    if ( this.confirmarSenha.errors?.senhasDiferentes ) {
       return constantes.textos.CONFIRMARSENHA_DIFERENTE;
     }
     return '';
   }
 
   onSubmit() {
+    this.loading = true;
     this.userService.criarConta(this.contaForm.value)
       .subscribe(
         (res) => {
+          this.loading = false;
           this.dialog.open(DialogComponent, {
             data: {
               message: constantes.textos.CONTA_CRIADA_SUCESSO,
@@ -116,6 +125,7 @@ export class CriarContaComponent implements OnInit {
             });
         },
         (err) => {
+          this.loading = false;
           const firstMsg = err.error.errors[0];
           this.dialog.open(DialogComponent, {
             data: {message: firstMsg.message}

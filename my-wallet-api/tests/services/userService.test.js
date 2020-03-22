@@ -42,6 +42,7 @@ describe('userService', () => {
     });
 
     test('createUser - User already exist', () => {
+        expect.assertions(1);
         const body = {
             nome: 'Teste',
             sobrenome: 'Teste',

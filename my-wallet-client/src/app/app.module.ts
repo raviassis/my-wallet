@@ -10,8 +10,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
-import {MatIconModule} from '@angular/material/icon';
-import {MatDialogModule} from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatCardModule } from '@angular/material/card';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatListModule } from '@angular/material/list';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 /***********/
 
 /*Nativos*/
@@ -20,6 +25,10 @@ import { AppComponent } from './app.component';
 import { CriarContaComponent } from './pages/criar-conta/criar-conta.component';
 import { LoginComponent } from './pages/login/login.component';
 import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
+import { MainComponent } from './layouts/main/main.component';
+import { HomeComponent } from './pages/home/home.component';
+import { SidenavComponent } from './layouts/main/sidenav/sidenav.component';
+import { SpinnerComponent } from './shared/components/spinner/spinner.component';
 /*********/
 
 @NgModule({
@@ -27,7 +36,11 @@ import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
     AppComponent,
     CriarContaComponent,
     LoginComponent,
-    DialogComponent
+    DialogComponent,
+    MainComponent,
+    HomeComponent,
+    SidenavComponent,
+    SpinnerComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +52,12 @@ import { DialogComponent } from './shared/dialogs/dialog/dialog.component';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCardModule,
+    MatSidenavModule,
+    MatListModule,
+    MatDividerModule,
+    MatProgressSpinnerModule
   ],
   providers: [],
   bootstrap: [AppComponent]
